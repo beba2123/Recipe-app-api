@@ -35,4 +35,17 @@ ENV  PATH="/py/bin:$PATH"
 
 USER django-user
 
-#2nd step is create a file called docker-compose.yml and inside of it we write 
+
+# 2nd step is create a file called docker-compose.yml and inside of it we write 
+version: "docker-compose version"
+
+services: 
+    app:
+        build:
+            context: . -> build in side root directory
+        ports:
+          - "8000:8000" 
+        volumes:
+          - ./app:/app
+        command:  >
+        sh -c "python manage,=.py runserver 0.0.0.0:8000"
