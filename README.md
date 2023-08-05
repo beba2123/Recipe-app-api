@@ -42,7 +42,7 @@ RUN python -m venv /py && \
         django-user
 
 ENV  PATH="/py/bin:$PATH"
-
+  
 USER django-user
 
 
@@ -69,8 +69,24 @@ services:
 -> install flake8 package
 -> Run it through Docker Compose 
 command -> docker-compose run --rm app sh -c "flake8"
+-> so first we create flake8 file then we write some of file that we are going to exclude from it like 
+[flake8]
+exclude=
+    migrations,
+    __pycache__,
+    manage.py,
+    settings.py
+
+
 
 # Testing
 -> Django test suite
 -> Setup tests per Django app
--> 
+-> in order to run docker-compose run --rm app sh -c "python manage.py test"
+
+
+# django project
+
+-> so after setting our docker file we are going to create our project inside our working directory("app")
+command ("docker-compose run --rm app sh -c "django-admin startproject app .")  
+# NOTE '.' refers to locate that we are to create our django inside the the working directory.
