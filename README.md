@@ -89,4 +89,11 @@ exclude=
 
 -> so after setting our docker file we are going to create our project inside our working directory("app")
 command ("docker-compose run --rm app sh -c "django-admin startproject app .")  
-# NOTE '.' refers to locate that we are to create our django inside the the working directory.
+# NOTE '.' 
+-> refers to locate that we are to create our django inside the the working directory.
+
+# Github action
+
+-> They are powerfull automation and CI/CD(continious integration and continious deployment) platform provided by github.They allow developers to define custom workflows to automate tasks,  build, test, and deploy their code directly from their github repository.
+
+->how it works 1st you have to push it to a github then run unit tests and finally watch the result. 
