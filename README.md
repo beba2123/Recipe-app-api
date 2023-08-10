@@ -9,6 +9,9 @@ in this Project we are using docker, postgress and django(python web framework)
 
 # Docker 
 docker is a containerization technology which allows us to package an application with all its dependencies into and also it is an opensource platform that allows developers to automate deployment, scaling, and mangement of applications inside lightweight, portable container. 
+# Docker images
+-> they are a blue print for container which means that they can be runtime enviroment, application code, commands, or any dependancies
+
 # container 
 container are self contained units that package all the neccessary software, libraries, and dependancies needed to run an application.
 # Docker Compose
@@ -97,3 +100,34 @@ command ("docker-compose run --rm app sh -c "django-admin startproject app .")
 -> They are powerfull automation and CI/CD(continious integration and continious deployment) platform provided by github.They allow developers to define custom workflows to automate tasks,  build, test, and deploy their code directly from their github repository.
 
 ->how it works 1st you have to push it to a github then run unit tests and finally watch the result. 
+
+# Django test framework
+
+=> django comes with a built in testing framework that makes it easy to write and run unit tests for your web applications. the testing framework provides testcases, running tests, and asserting expected behavior.
+=> 1 test cases is defined as subclass of 'django.test.TestCase'. Test cases can contain one or more method that represent a specific test scenario.
+=> 2 Fixtures are states  of predefined data used to setup intial state for your tests.
+
+=> 3 Assertions -> django provides a set of assertion method that allows to check certain condtion are met during testing.
+
+=> 4 Test Clients ->testing client simulates making requests to your views and testing responces.it allows you to interact with your views and testing the rendering templates.
+ 
+
+# where do you put tests?
+
+-> by creating placeholder or a file like tests.py and added to each app
+-> or create test/ subdirectory to split tests up
+NOTE!! only use one of the two not both
+       test modules must starts with test_
+       test files can be named anything but they should end with _test.py
+       test directories must contain __init__.py
+
+
+# Test classes 
+    -> SimpleTestCase
+        --> we use it for no database is required for a test
+        --> save time during excuting test.
+    -> TestCase
+        --> Database integration
+        --> Useful  for testing code that uses database
+        
+        
