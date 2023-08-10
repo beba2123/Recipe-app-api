@@ -129,5 +129,56 @@ NOTE!! only use one of the two not both
     -> TestCase
         --> Database integration
         --> Useful  for testing code that uses database
-        
-        
+
+
+# Mocking 
+    -> it one of the technique that is used for testing a software.it is particularly used for when testing interaction between diffrent component or a system that are not easily testable due to dependancies, external services, or complexity so mocking allows us to  isolate the code that going to be tested.
+# benefits of mocking
+    ->avoid unintended consequences(it allows you to eliminate unitended side effects by replacing real components with controlled substitutes.)
+    ->avoid relying on external services.
+    ->speed up testing 
+    -> focused testing
+    -> reduce dependencies
+    -> make tests more reliable
+
+# How to write mocks in python ?
+    -> we use unittest.mock
+     
+
+
+# Test request in django using APIClient
+->Testing requests is used to ensure that the API endpoints in your django application work as expected. so django provides a testing framework that makes it easy to create test cases for your views, APIs, and other components. you can use this framework to stimulate HTTP request and validate reponce.
+
+-> first import APIClient from rest_framework.test
+-> then call client = APIClient() inside our test class
+-> now we have access to all methods available in API Client like get, post etc...
+-> make request by using the endpoint that we want
+-> check the result by using assertEqual
+
+EXAMPLE
+from rest_framework.test import APIClient
+
+    class TestViews(simpleTestCase):
+
+        def test_get_greeting(self):
+        """test getting greeting"""
+            client = APIClient()
+            res = client.get('/greeting/')
+            self.assertEqual(res.status_code , status.HTTP_200_OK)
+            self.assertEqual(
+                res.data, ["hello", "akaam", "endet nehe", hola! ],
+            )
+
+
+# Configuring Database
+
+-> in this project we are going to use PostgreSQL database(open source database) and it can integrate well with django.
+
+
+ # how to set up network connectivity between the database(Postgres) and Django(app)
+-> we can automatically using docker-compose
+   1st -> we setup depends_on on app service to start db(database) first
+   2nd -> docker-compose creates a network on the background between app service and db service in which the db uses it as a hostname
+
+-> Volumes
+    -> it is how we store persistent data using docker compose.they are a way to share data and store data separately from the container's file system, and they play crucial role in making data available to container, even if the containers are stopped, started, or even deleted.
