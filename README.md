@@ -182,3 +182,7 @@ from rest_framework.test import APIClient
 
 -> Volumes
     -> it is how we store persistent data using docker compose.they are a way to share data and store data separately from the container's file system, and they play crucial role in making data available to container, even if the containers are stopped, started, or even deleted.
+
+-> Enviroments 
+    -> used for configuring and customizing how the services run and the configuration and the services happens without affecting the source code.
+    -> it creates a dynamic behavior in your application for example if you want to run your application in debug mode or in production mode you can use envriroments.

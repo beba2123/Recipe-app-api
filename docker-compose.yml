@@ -2,13 +2,33 @@ version: "3.9"
 
 services: 
     app:
-        build:
-            context: . 
-            args:
-              - DEV=true
-        ports:
+      build:
+          context: . 
+          args:
+            - DEV=true
+      ports:
           - "8000:8000"
-        volumes:
-          - ./app:/app
-        command:  >
-          sh -c "python manage.py runserver 0.0.0.0:8000"
+      volumes:
+        - ./app:/app
+      command:  >
+        sh -c "python manage.py runserver 0.0.0.0:8000"
+      enviroment:
+        - DB_HOST=db
+        - DB_NAME=devdb
+        - DB_USER=devuser
+        - DB_PASS=password
+      depends_on: # for telling the service is depends on db(PostgresSQL)
+        - db
+        
+    db:
+      image: postgres:13-alpine
+      volumes: 
+        - dev-db-data:/var/lib/postgresql/data
+      enviroment:
+        - POSTGRES_DB=devdb
+        - POSTGRES_USER=devuser
+        - POSTGRES_PASSWORD=password
+      
+  
+volumes:
+  dev-db-data:
