@@ -186,3 +186,7 @@ from rest_framework.test import APIClient
 -> Enviroments 
     -> used for configuring and customizing how the services run and the configuration and the services happens without affecting the source code.
     -> it creates a dynamic behavior in your application for example if you want to run your application in debug mode or in production mode you can use envriroments.
+
+# Psycopg2
+-> it is popular open source PostgreSQL database adapter for pyhton programming language it allows python application to interact with PostgreSQL databases by providing db API to perform various database operation like quering, manupilating, connecting data. 
+
