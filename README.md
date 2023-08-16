@@ -190,3 +190,7 @@ from rest_framework.test import APIClient
 # Psycopg2
 -> it is popular open source PostgreSQL database adapter for pyhton programming language it allows python application to interact with PostgreSQL databases by providing db API to perform various database operation like quering, manupilating, connecting data. 
 
+# Docker services timeline
+-> first the docker database start first then (service start) after the service started  then django app service start and then both the postgres and App start simultinously but the postgres to begin the process to begin it takes quite a lot time to start but App will start and setup the connection for the database and try to connect to the database(Postgres) but this one create an error becouse postgres still is not ready to connect so this create an error.
+
+=>> so the solution is using wait_for_db command in django which means that it continiously check until the database is ready.
