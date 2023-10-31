@@ -193,7 +193,7 @@ from rest_framework.test import APIClient
 # Docker services timeline
 -> first the docker database start first then (service start) after the service started  then django app service start and then both the postgres and App start simultinously but the postgres to begin the process to begin it takes quite a lot time to start but App will start and setup the connection for the database and try to connect to the database(Postgres) but this one create an error becouse postgres still is not ready to connect so this create an error.
 
-=>> so the solution is using wait_for_db command in django which means that it continiously check until the database is ready.
+=>> so the solution is using wait_for_db command in django which means that it continiously check until the database is ready(postgresql database) so when it is ready it connect to the Django app.
 
 # installing postgresql in dockerfile
 
@@ -202,3 +202,4 @@ from rest_framework.test import APIClient
                ->postgresql-dev
                ->musl-dev
 =>there are several packages but since we want alpine type so the previous is enough.
+
