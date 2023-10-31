@@ -201,5 +201,5 @@ from rest_framework.test import APIClient
                ->Build-base
                ->postgresql-dev
                ->musl-dev
-=>there are several packages but since we want alpine type so the previous is enough.
+=>  there are several packages but since we want alpine type so the previous is enough.
 
