@@ -15,10 +15,10 @@ class CommandTests(SimpleTestCase):
 
         call_command('wait_for_db')
 
-        patched_check.assert_called_once_with(database=['default']) #called one time
+        patched_check.assert_called_once_with(databases=['default']) #called one time
 
     @patch('time.sleep') #becouse we don't have to check the database over and over again it has to have delay time.
-    def test_wait_for_db_delay(self, patched_check):
+    def test_wait_for_db_delay(self, patched_sleep, patched_check):
 
         """Test waiting for database delay time when getting Operational & psycopg2 Error."""
         patched_check.side_effect = [Psycopg2Error] * 2 + [OperationalError] * 3 + [True]
@@ -26,4 +26,4 @@ class CommandTests(SimpleTestCase):
         call_command('wait_for_db')
 
         self.assertEqual(patched_check.call_count, 6)
-        patched_check.assert_called_with(database=['default']) # it has to be called multiple time.
+        patched_check.assert_called_with(databases=['default']) # it has to be called multiple time.
