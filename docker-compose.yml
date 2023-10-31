@@ -23,7 +23,7 @@ services:
     db:
       image: postgres:13-alpine
       volumes: 
-        - dev-db-data:/var/lib/postgresql/data
+        - dev-db-data:/var/lib/postgresql/data # it is a place where persitent data stored
       environment:
         - POSTGRES_DB=devdb
         - POSTGRES_USER=devuser
@@ -31,4 +31,4 @@ services:
       
   
 volumes:
-  dev-db-data:
+  dev-db-data:          #The reason we cannot write the file that is going to be stored is docker automaticly handle it for it self

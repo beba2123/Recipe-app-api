@@ -177,7 +177,7 @@ from rest_framework.test import APIClient
 
  # how to set up network connectivity between the database(Postgres) and Django(app)
 -> we can automatically using docker-compose
-   1st -> we setup depends_on on app service to start db(database) first
+   1st -> we setup depends_on on app service to start db(database) first to make sure that one service is start overone another.
    2nd -> docker-compose creates a network on the background between app service and db service in which the db uses it as a hostname
 
 -> Volumes
@@ -194,3 +194,11 @@ from rest_framework.test import APIClient
 -> first the docker database start first then (service start) after the service started  then django app service start and then both the postgres and App start simultinously but the postgres to begin the process to begin it takes quite a lot time to start but App will start and setup the connection for the database and try to connect to the database(Postgres) but this one create an error becouse postgres still is not ready to connect so this create an error.
 
 =>> so the solution is using wait_for_db command in django which means that it continiously check until the database is ready.
+
+# installing postgresql in dockerfile
+
+=> So in this project the package that we are going to use inorder to install for the alpine version ->postgresql-client
+               ->Build-base
+               ->postgresql-dev
+               ->musl-dev
+=>there are several packages but since we want alpine type so the previous is enough.
