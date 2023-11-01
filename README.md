@@ -204,3 +204,9 @@ from rest_framework.test import APIClient
 
 =>  there are several packages but since we want alpine type so the previous is enough.
 
+# Testing Using Patch
+-> it is one if the unittest.mock module is used for temporarily replacing an object with a mock object. mostly we use it for testing phase to isolate and test specific parts of your code without affecting other
+        some key uses for using mocks in Django:
+            1-> Isolate Dependancies
+            2-> Simulate Behavior(helps to simulate external services like APIs, or Databases..without depending on external services)
+            3-> Verify Method Calls(provides the ablity to  verify whether specific methods or functions are called with the expected parameters & ensure that your code is interacts correctly with its dependencies.)

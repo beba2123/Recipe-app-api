@@ -5,7 +5,7 @@ from django.core.management import call_command
 from django.db.utils import OperationalError
 from django.test import SimpleTestCase
 
-@patch('core.management.commands.wait_for_db.Command.check')
+@patch('core.management.commands.wait_for_db.Command.check') #  like decorator calling the wait_for_db file, Command Class and check method.
 class CommandTests(SimpleTestCase):
     """Test Commands."""
 
