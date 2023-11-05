@@ -8,7 +8,7 @@ from django.contrib.auth.models import(
 class UserManager(BaseUserManager):
     """Manager for Users."""
 
-    def create_users(self, email, password=None, **extra_field):
+    def create_user(self, email, password=None, **extra_field):
         """Create, save and return a new user."""
         user = self.model(email=email, **extra_field) #self.model to call the other model (User class) & pass the email and other things
         user.set_password(password) #incrypt the given password
