@@ -221,6 +221,7 @@ from rest_framework.test import APIClient
 # User model manage
 -> it is a class that is responsible for creating, updating and deleting user objects in the database. it also plays crucial roles in Django authentication system and is associated with the user model, which is used for user authentication and authorization within the application.
 -> The User model manager typically provides method for common user-related operations like creating new users, retrieving user instances, and managing user permissions.
+-> It allows you to perform various tasks related to user management and authentication, including custom queries and user-specific operations
 
 
 
