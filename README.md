@@ -1,37 +1,37 @@
 an api that is used for recipe app.
 
-in this Project we are using docker, postgress and django(python web framework) 
+in this Project we are using docker, postgress and django(python web framework)
 # requirements.txt and requirments.dev.txt
 ->so the main diffrence btn them is we used it for listing all dependancy required for the production enviroment.these are packages needed to run application in stable and reliable manner.
 
-# requirments.dev.txt 
+# requirments.dev.txt
 -> we use this for listing the development dependancies like a packages needed for development and testing purpose. eg. flake for linting and testing, debugging
 
-# Docker 
-docker is a containerization technology which allows us to package an application with all its dependencies into and also it is an opensource platform that allows developers to automate deployment, scaling, and mangement of applications inside lightweight, portable container. 
+# Docker
+docker is a containerization technology which allows us to package an application with all its dependencies into and also it is an opensource platform that allows developers to automate deployment, scaling, and mangement of applications inside lightweight, portable container.
 # Docker images
 -> they are a blue print for container which means that they can be runtime enviroment, application code, commands, or any dependancies
 
-# container 
+# container
 container are self contained units that package all the neccessary software, libraries, and dependancies needed to run an application.
 # Docker Compose
 -> it is a tool that is provided by a docker that allows to define and manage multi container Docker application. it uses YAML file to configure the services, networks, and volumes required for application enviroment. it can automates the process of starting, stopping, and  connecting multiple container. By writing one single  command you can  bring up an entire application defined in the compose file.
 -> in order to use a docker compose we have to create docker-compose.yml file in our project and configure it inside the file.
 
 # 1- create a file named Dockerfile in the root directory of your project with following content:
-  
+
 
 FROM python:3.11-alpine3.17
 LABEL maintainer="beba2123"
 
-ENV PYTHONBUFFERED 1  
+ENV PYTHONBUFFERED 1
 
 COPY ./requirements.txt /tmp/requirements.txt   # copy requirements to image
 Copy ./app /app
 WORKDIR /app
 EXPOSE 8000
 
-ARG DEV=false ==>> which means that make development enviroment false 
+ARG DEV=false ==>> which means that make development enviroment false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     /py/bin/pip install -r requirnments.txt && \
@@ -45,34 +45,34 @@ RUN python -m venv /py && \
         django-user
 
 ENV  PATH="/py/bin:$PATH"
-  
+
 USER django-user
 
 
-#  2nd step is create a file called docker-compose.yml and inside of it we write 
+#  2nd step is create a file called docker-compose.yml and inside of it we write
 
 version: "docker-compose version"
 
-services: 
+services:
     app:
         build:
             context: . -> build in side root directory
         ports:
-          - "8000:8000" 
+          - "8000:8000"
         volumes:
           - ./app:/app
         command:  >
         sh -c "python manage,=.py runserver 0.0.0.0:8000"
 
 
-# 3rd step is linting tool 
+# 3rd step is linting tool
 -> linting is used for formating your code,  highlighting errors, typos
 
 # How we handle linting
 -> install flake8 package
--> Run it through Docker Compose 
+-> Run it through Docker Compose
 command -> docker-compose run --rm app sh -c "flake8"
--> so first we create flake8 file then we write some of file that we are going to exclude from it like 
+-> so first we create flake8 file then we write some of file that we are going to exclude from it like
 [flake8]
 exclude=
     migrations,
@@ -91,15 +91,15 @@ exclude=
 # django project
 
 -> so after setting our docker file we are going to create our project inside our working directory("app")
-command ("docker-compose run --rm app sh -c "django-admin startproject app .")  
-# NOTE '.' 
+command ("docker-compose run --rm app sh -c "django-admin startproject app .")
+# NOTE '.'
 -> refers to locate that we are to create our django inside the the working directory.
 
 # Github action
 
 -> They are powerfull automation and CI/CD(continious integration and continious deployment) platform provided by github.They allow developers to define custom workflows to automate tasks,  build, test, and deploy their code directly from their github repository.
 
-->how it works 1st you have to push it to a github then run unit tests and finally watch the result. 
+->how it works 1st you have to push it to a github then run unit tests and finally watch the result.
 
 # Django test framework
 
@@ -110,7 +110,7 @@ command ("docker-compose run --rm app sh -c "django-admin startproject app .")
 => 3 Assertions -> django provides a set of assertion method that allows to check certain condtion are met during testing.
 
 => 4 Test Clients ->testing client simulates making requests to your views and testing responces.it allows you to interact with your views and testing the rendering templates.
- 
+
 
 # where do you put tests?
 
@@ -122,7 +122,7 @@ NOTE!! only use one of the two not both
        test directories must contain __init__.py
 
 
-# Test classes 
+# Test classes
     -> SimpleTestCase
         --> we use it for no database is required for a test
         --> save time during excuting test.
@@ -131,19 +131,19 @@ NOTE!! only use one of the two not both
         --> Useful  for testing code that uses database
 
 
-# Mocking 
+# Mocking
     -> it one of the technique that is used for testing a software.it is particularly used for when testing interaction between diffrent component or a system that are not easily testable due to dependancies, external services, or complexity so mocking allows us to  isolate the code that going to be tested.
 # benefits of mocking
     ->avoid unintended consequences(it allows you to eliminate unitended side effects by replacing real components with controlled substitutes.)
     ->avoid relying on external services.
-    ->speed up testing 
+    ->speed up testing
     -> focused testing
     -> reduce dependencies
     -> make tests more reliable
 
 # How to write mocks in python ?
     -> we use unittest.mock
-     
+
 
 
 # Test request in django using APIClient
@@ -183,12 +183,12 @@ from rest_framework.test import APIClient
 -> Volumes
     -> it is how we store persistent data using docker compose.they are a way to share data and store data separately from the container's file system, and they play crucial role in making data available to container, even if the containers are stopped, started, or even deleted.
 
--> Enviroments 
+-> Enviroments
     -> used for configuring and customizing how the services run and the configuration and the services happens without affecting the source code.
     -> it creates a dynamic behavior in your application for example if you want to run your application in debug mode or in production mode you can use envriroments.
 
 # Psycopg2
--> it is popular open source PostgreSQL database adapter for pyhton programming language it allows python application to interact with PostgreSQL databases by providing db API to perform various database operation like quering, manupilating, connecting data. 
+-> it is popular open source PostgreSQL database adapter for pyhton programming language it allows python application to interact with PostgreSQL databases by providing db API to perform various database operation like quering, manupilating, connecting data.
 
 # Docker services timeline
 -> first the docker database start first then (service start) after the service started  then django app service start and then both the postgres and App start simultinously but the postgres to begin the process to begin it takes quite a lot time to start but App will start and setup the connection for the database and try to connect to the database(Postgres) but this one create an error becouse postgres still is not ready to connect so this create an error.
@@ -212,7 +212,7 @@ from rest_framework.test import APIClient
             3-> Verify Method Calls(provides the ablity to  verify whether specific methods or functions are called with the expected parameters & ensure that your code is interacts correctly with its dependencies.)
 
 # Django User Model
-->it is like the foundation of the django auth system but it has one of the major problem in it , it isnot easy to customize it. 
+->it is like the foundation of the django auth system but it has one of the major problem in it , it isnot easy to customize it.
 -> The main reason to say this is modifying the User model in Django requires creating a new customer User model, which can lead to complicates with the database migrations and constraints.so who ever read this use your own user  databases
 -> the other reason is many django applicationss and third party packages are built with assumptions about the default User model so customizing the User model may require adjustments to these dependancies, potentialy leads to compatability issues.
 ->So in this project we are going to use "AbstractBaseUser" and "PermissionsMixin" model
@@ -221,4 +221,7 @@ from rest_framework.test import APIClient
 # User model manage
 -> it is a class that is responsible for creating, updating and deleting user objects in the database. it also plays crucial roles in Django authentication system and is associated with the user model, which is used for user authentication and authorization within the application.
 -> The User model manager typically provides method for common user-related operations like creating new users, retrieving user instances, and managing user permissions.
+
+
+
 
