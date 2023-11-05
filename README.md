@@ -210,3 +210,15 @@ from rest_framework.test import APIClient
             1-> Isolate Dependancies
             2-> Simulate Behavior(helps to simulate external services like APIs, or Databases..without depending on external services)
             3-> Verify Method Calls(provides the ablity to  verify whether specific methods or functions are called with the expected parameters & ensure that your code is interacts correctly with its dependencies.)
+
+# Django User Model
+->it is like the foundation of the django auth system but it has one of the major problem in it , it isnot easy to customize it. 
+-> The main reason to say this is modifying the User model in Django requires creating a new customer User model, which can lead to complicates with the database migrations and constraints.so who ever read this use your own user  databases
+-> the other reason is many django applicationss and third party packages are built with assumptions about the default User model so customizing the User model may require adjustments to these dependancies, potentialy leads to compatability issues.
+->So in this project we are going to use "AbstractBaseUser" and "PermissionsMixin" model
+-> AbstractBaseUser -> it is a convinient and powerful way to create customer user model with your desired fields and behaviors, So you will have full control over the fields and methods that defines your user model.(like you can customize it in whatever way you want.)
+
+# User model manage
+-> it is a class that is responsible for creating, updating and deleting user objects in the database. it also plays crucial roles in Django authentication system and is associated with the user model, which is used for user authentication and authorization within the application.
+-> The User model manager typically provides method for common user-related operations like creating new users, retrieving user instances, and managing user permissions.
+
