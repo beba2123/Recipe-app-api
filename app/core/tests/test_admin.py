@@ -10,7 +10,7 @@ from django.test import Client
 class AdminSiteTests(TestCase):
     "Tests for Django Admin."
 
-    def setup(self):
+    def setUp(self):
         """Create User and client."""
         self.client = Client() #allows as http request(put, get..)
         self.admin_user = get_user_model().objects.create_superuser(
@@ -21,7 +21,7 @@ class AdminSiteTests(TestCase):
         self.user = get_user_model().objects.create_user(
             email='user@gmail.com',
             password='password123',
-            name='Test User',
+            name='Test User'
         )
 
     def test_users_list(self):
