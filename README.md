@@ -224,5 +224,13 @@ from rest_framework.test import APIClient
 -> It allows you to perform various tasks related to user management and authentication, including custom queries and user-specific operations
 
 
+# Django Admin
+-> it is one of the GUI for model that is created in django so using admin you can Create, Read, Update, Delete users and other staff.
+->  Very little coding required inorder to setup Django admin.
+
+#  Test Admin site
+-> Testing Django admin is to ensure the correctness and reliablity of an application adminstrative interface.Django provide a testing framework to test the admin like here is an example.
+
+
 
 
