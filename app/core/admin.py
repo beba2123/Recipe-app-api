@@ -13,7 +13,7 @@ class UserAdmin(BaseUserAdmin):
     """Define the admin pages for users."""
     ordering = ['id']
     list_display = ('email', 'name')
-    fieldsets=(
+    fieldsets=(       #field set is place where we can edit user like edit email or password or it is a place that sets our status which is staff, active, superuser
         (None, {'fields': ('email', 'password')}),
         (
             _('permission'),
@@ -24,7 +24,9 @@ class UserAdmin(BaseUserAdmin):
                     'is_superuser',
                 )
             }
-        )
+        ),
+        (_('Important dates'), {'fields':('last_login',)}),
     )
+    readonly_fields = ['last_login'] #to make the field visable for the user but not editable.
 
 admin.site.register(models.User, UserAdmin) #to make customizable otherwise if we write it without UserAdmin it will be default one.
