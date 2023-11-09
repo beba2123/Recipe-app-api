@@ -32,3 +32,11 @@ class AdminSiteTests(TestCase):
 
         self.assertContains(res, self.user.name)   #check if our created user is present in the list
         self.assertContains(res, self.user.email)
+
+    def test_edit_user_page(self):
+        """Test that edit user page works correctly."""
+
+        url = reverse("admin:core_user_change", args=[self.user.id])
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, 200)
