@@ -28,5 +28,18 @@ class UserAdmin(BaseUserAdmin):
         (_('Important dates'), {'fields':('last_login',)}),
     )
     readonly_fields = ['last_login'] #to make the field visable for the user but not editable.
-
+    add_fieldsets =(
+        (None,{
+            'classes':('wide',), #it use for making the pages looks wide 
+            'fields': (
+                'email',
+                'password1',
+                'password2',
+                'name',
+                'is_active',
+                'is_staff',
+                'is_superuser',
+            )
+        }),
+    )
 admin.site.register(models.User, UserAdmin) #to make customizable otherwise if we write it without UserAdmin it will be default one.
