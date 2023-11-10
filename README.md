@@ -231,6 +231,19 @@ from rest_framework.test import APIClient
 #  Test Admin site
 -> Testing Django admin is to ensure the correctness and reliablity of an application adminstrative interface.Django provide a testing framework to test the admin like here is an example.
 
+# DRF(django restframework) automatic documentation
+->there is a third party libraries in django which is used to generate documentation called "drf-spectacular".
+
+-> the drf-spectacular generates Schema(so the schema file is documented in JSON OR YAML) it explains the API(endpoint) in a standrad way.
+-> So the schema is going to give a browsable web interface inorder to have infromation about api.
+
+# Open API SCHEMA
+-> This will be used by swagger, which is an open source tool that can generate html pages from your code.
+-> It uses JSON OR YAML format to describe the structure of the RESTful API.
+-> by providing OpenAPI description of your API, you can generate interactive and user friedly description using a tools like Swagger UI or ReDoc so other developer can easily understand API's endpoint, request/response formats, and authentication and mechanism
+
+
+
 
 
 
