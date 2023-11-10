@@ -15,15 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-# from drf_spectacular import (
-#     SpectacularAPIView,
-#     SpectacularSwaggerView,
-# )
+from drf_spectacular import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+)
 
 
 
-# urlpatterns = [
-#     path('admin/', admin.site.urls),
-#     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
-#     path('api/doc')
-# ]
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
+    path('api/doc', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs')
+]
