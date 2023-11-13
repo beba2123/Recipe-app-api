@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from drf_spectacular import (
-    SpectacularAPIView,
+from drf_spectacular.views import (
+    SpectacularAPIView, #class based view
     SpectacularSwaggerView,
 )
 
@@ -24,6 +24,6 @@ from drf_spectacular import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
-    path('api/doc', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs')
+    path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'), #when you use as_view use to convert class based view to function based view 
+    path('api/doc', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
 ]

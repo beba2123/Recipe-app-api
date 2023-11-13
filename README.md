@@ -233,7 +233,7 @@ from rest_framework.test import APIClient
 
 # DRF(django restframework) automatic documentation
 ->there is a third party libraries in django which is used to generate documentation called "drf-spectacular".
-
+-> schema means the structure of the API including the avialable endpoint, method, and data format.
 -> the drf-spectacular generates Schema(so the schema file is documented in JSON OR YAML) it explains the API(endpoint) in a standrad way.
 -> So the schema is going to give a browsable web interface inorder to have infromation about api.
 
