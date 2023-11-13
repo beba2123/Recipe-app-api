@@ -243,7 +243,8 @@ from rest_framework.test import APIClient
 -> by providing OpenAPI description of your API, you can generate interactive and user friedly description using a tools like Swagger UI or ReDoc so other developer can easily understand API's endpoint, request/response formats, and authentication and mechanism
 
 
-
+# Testing
+->There are two  types of testing public and private testing. public testing it means that it test unauthenticated requests like registeing a new user
 
 
 
