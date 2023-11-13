@@ -31,3 +31,11 @@ class PublicUserApiTests(TestCase):
         self.assertTrue(user.check_password(payload['password']))
         self.assertNotIn('password', res.data) #to check that the string password is not present in responce data of an HTTP Request.
 
+    def test_user_with_email_exists_error(self):
+        """Test that email already exists in database error"""
+        payload = {'email':'test@gmail.com','password':'testpass','name':'test'}
+        create_user(**payload)
+        res = self.client.post(CREATE_USER_URL, payload)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST) #FOR TELLING THAT EMAIL IS EXIST.
+
+    
