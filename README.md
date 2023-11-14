@@ -260,3 +260,10 @@ from rest_framework.test import APIClient
 
 ->But in this project we used TOKEN AUTHENTICATION becouse it simplicity and largely used among Django community and lastly it avoid sending username/password each time.
 
+# TOKEN AUTHENTICATION
+-> STEP 1 each time the user logs in the server generates a unique token that is going to be associated with the user.
+-> STEP 2 the client stores the token locally, typically with the secure manner like cookie or local storage.
+-> STEP3 for each request to the server the client include the token in the request header. so the token is usually sent using Authorization header like this `Autorization: Bearer <token>`.
+-> STEP 4  Upon recieving a request the server extracts the token from the request header & validate the token to ensure it's legitimate
+-> STEP 5   Token authentication is statless becouse it doesn't store the user session..
+-> each token has it's expiration time so if the token expires the user needs to re-authenticate.
