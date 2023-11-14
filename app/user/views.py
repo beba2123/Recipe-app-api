@@ -8,5 +8,5 @@ from user.serializers import UserSerializer
 
 class CreateUserView(generics.CreateAPIView): #CreateAPIView that handle the creation of new model instances and it corrspond to the HTTP POST method.
     """Create a new user in the system."""
-    serializer_class = UserSerializer
+    serializer_class = UserSerializer #specify the serializers to be used for serializing the user data.
 

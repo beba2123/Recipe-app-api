@@ -251,3 +251,12 @@ from rest_framework.test import APIClient
 -> some reason why we use serializers are like Data-Validation(they provide a  convinient way to validate an incoming data to ensure that the data meets certain criteria before it passed for further process )
 -> A serializer class is responsible for converting complex datatypes into python objects or vice versa.
 
+# types of authentication
+
+->Basic - send username and password with each request
+->Token - use a token in the HTTP header
+->JSON Web Token(JWT) -Use an access and refresh token
+->Session - Use cookies
+
+->But in this project we used TOKEN AUTHENTICATION becouse it simplicity and largely used among Django community and lastly it avoid sending username/password each time.
+
