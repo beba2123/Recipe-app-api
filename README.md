@@ -246,5 +246,7 @@ from rest_framework.test import APIClient
 # Testing
 ->There are two  types of testing public and private testing. public testing it means that it test unauthenticated requests like registeing a new user
 
-
-
+# Serializer
+-> use for transforming complex data types such as Django models or querysets, into python data types that can be easily converted to JSON and sent to a client or recieved from a client.
+-> some reason why we use serializers are like Data-Validation(they provide a  convinient way to validate an incoming data to ensure that the data meets certain criteria before it passed for further process )
+-> A serializer class is responsible for converting complex datatypes into python objects or vice versa.
