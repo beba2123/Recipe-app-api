@@ -25,18 +25,18 @@ class AuthTokenSerializer(serializers.Serializers): #import the default one
         trim_whitespace =False,
     )
 
-    # def validate(self, attrs):
-    #     """Validate and authenticate the user."""
-    #     email = attrs.get('email')
-    #     password = attrs.get('password')
-    #     user = authenticate(
-    #         request=self.context.get('request'),
-    #         email=email,
-    #         password=password,
-    #     )
-    #     if not user:
-    #         msg = _('Unable to authenticate with the provided credentials.')
-    #         raise serializers.ValidationError(msg, code='authentication') #it is a way/method to show that it is bad request through serialilzer
+    def validate(self, attrs):
+        """Validate and authenticate the user."""
+        email = attrs.get('email')
+        password = attrs.get('password')
+        user = authenticate(
+            request=self.context.get('request'),
+            email=email,
+            password=password,
+        )
+        if not user:
+            msg = _('Unable to authenticate with the provided credentials.')
+            raise serializers.ValidationError(msg, code='authentication') #it is a way/method to show that it is bad request through serialilzer
 
-    #     attrs['user'] = user #attrs contain a kev value pair where 'user' maps to the user data.
-    #     return attrs
+        attrs['user'] = user #attrs contain a kev value pair where 'user' maps to the user data.
+        return attrs
