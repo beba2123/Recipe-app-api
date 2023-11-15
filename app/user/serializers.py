@@ -40,3 +40,4 @@ class AuthTokenSerializer(serializers.Serializers): #import the default one
 
         attrs['user'] = user #attrs contain a kev value pair where 'user' maps to the user data.
         return attrs
+    
