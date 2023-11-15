@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         """Create  and return a user with encrypted password."""
         return get_user_model().objects.create_user(**validated_data)
 
-class AuthTokenSerializer(serializers.Serializers): #import the default one
+class AuthTokenSerializer(serializers.Serializer): #import the default one
     """Serializer for the user authentication token."""
     email = serializers.EmailField()
     password = serializers.CharField(
@@ -40,4 +40,3 @@ class AuthTokenSerializer(serializers.Serializers): #import the default one
 
         attrs['user'] = user #attrs contain a kev value pair where 'user' maps to the user data.
         return attrs
-    
