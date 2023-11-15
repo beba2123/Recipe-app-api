@@ -9,6 +9,9 @@ from rest_framework import status
 
 CREATE_USER_URL  = reverse('user:create') #'user -> appname 'create -> url name.''
 TOKEN_URL = reverse('user:token')
+ME_URL = reverse('user:me')
+
+
 def create_user(**params):
     """create and return new user."""
     return get_user_model().objects.create_user(**params)
@@ -87,3 +90,20 @@ class PublicUserApiTests(TestCase):
         res = self.client.post(TOKEN_URL, payload)
         self.assertNotIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_retrieve_user_unAuthorized(self):
+        """Test authentication is required for users."""
+        res = self.client.get(ME_URL)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+class PrivateUserApiTests(TestCase):
+    """Test API requests that require authentication."""
+
+    def setUp(self):
+        self.user = create_user(
+            email = 'test@example.com',
+            password= 'test-user-password123',
+            name='Test Name',
+        )
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.user)
