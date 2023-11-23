@@ -36,7 +36,7 @@ class AuthTokenSerializer(serializers.Serializer): #import the default one
         )
         if not user:
             msg = _('Unable to authenticate with the provided credentials.')
-            raise serializers.ValidationError(msg, code='authentication') #it is a way/method to show that it is bad request through serialilzer
+            raise serializers.ValidationError(msg, code='authorization') #it is a way/method to show that it is bad request through serialilzer
 
         attrs['user'] = user #attrs contain a kev value pair where 'user' maps to the user data.
         return attrs
