@@ -123,3 +123,13 @@ class PrivateUserApiTests(TestCase):
         res = self.client.post(ME_URL, {}) #user is not allowed to creat any thing in the endpoint(put and patch only)
 
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_update_user_profile(self):
+        """Test updating the user profile for the authenticated user."""
+        payload = {'name': 'Update name', 'password': 'newpassword123'}
+
+        res = self.client.patch(ME_URL, payload) #patch uses for updating.
+        self.user.refresh_from_db() #refresh the database inorder to update the value in the payload.
+        self.assertEqual(self.user.name, payload['name'])
+        self.assertTrue(self.user.check_password(payload['password']))
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
