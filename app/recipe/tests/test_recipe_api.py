@@ -30,7 +30,7 @@ class PublicRecipesApiTests(TestCase):
     """for unauthenticated API tests."""
 
     def setUp(self):
-        self.client = APIClient
+        self.client = APIClient()
 
     def test_auth_required(self):
         """Test that authentication is required for retrieving tags."""
@@ -41,8 +41,8 @@ class PublicRecipesApiTests(TestCase):
 class PrivateRecipesApiTests(TestCase):
     """For authenticated user API tests."""
 
-    def setup(self):
-        self.client = APIClient
+    def setUp(self):
+        self.client = APIClient()
         self.user = get_user_model().objects.create_user(
             'user@gmail.com',
             'password123',
@@ -58,12 +58,14 @@ class PrivateRecipesApiTests(TestCase):
 
         recipes =  Recipe.objects.all().order_by('-id')
         serializer = RecipeSerializer(recipes, many=True)  #for serializing multiple instance but if we serialize single  instance 'many=false'
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
 
     def test_recipe_list_limited_to_user(self):
         """Test retrieving recipes for the authenticated user."""
-        user2 = get_user_model().objects.create(
-            'other@gmail.com',
-            'testpass',
+        user2 = get_user_model().objects.create_user(
+            'user2@gmail.com',
+            'password123',
         )
         create_recipe(user=user2) #for not authenticate user
         create_recipe(user=self.user) #for authenticate user
