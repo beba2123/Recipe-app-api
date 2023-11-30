@@ -10,7 +10,7 @@ from rest_framework.test import APIClient
 from core.models import Recipe
 
 
-
+RECIPES_URL = reverse('recipe:recipe-list')
 
 def create_recipe(user, **params):
     """Create and return a sample recipe."""
@@ -25,3 +25,15 @@ def create_recipe(user, **params):
 
     recipe = Recipe.objects.create(user=user, **defaults) #create an  Recipe instance
     return recipe
+
+class PublicRecipesApiTests(TestCase):
+    """for unauthenticated API tests."""
+
+    def setUp(self):
+        self.client = APIClient
+
+    def test_auth_required(self):
+        """Test that authentication is required for retrieving tags."""
+        res = self.client.get(RECIPES_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
