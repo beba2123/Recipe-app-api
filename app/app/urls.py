@@ -27,4 +27,5 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'), #when you use as_view use to convert class based view to function based view
     path('api/doc', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
     path('api/user/', include('user.urls')),
+    path('api/recipe/', include('recipe.urls')),
 ]
