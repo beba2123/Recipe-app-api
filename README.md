@@ -267,3 +267,16 @@ from rest_framework.test import APIClient
 -> STEP 4  Upon recieving a request the server extracts the token from the request header & validate the token to ensure it's legitimate
 -> STEP 5   Token authentication is statless becouse it doesn't store the user session..
 -> each token has it's expiration time so if the token expires the user needs to re-authenticate.
+
+
+# APIView
+-> it is more focused on HTTP methods which means like GET, POST, PATCH, DELETE, PUT
+-> provide flexiblity over urls and logic
+->Useful for non CRUD APIs
+        -> Avoid for simple Create,Read, Update, Delete APIs
+->it provide also a lots of built- in features such as handling authentication, permissions and responce formatting.so it is a flexible way to structure the views and allows you to define diffrent methods for diffrent HTTP methods in a single class.
+# ViewSet
+->it is a class that bundles the logic for variouss HTTP methods(GET, POST, PUT, DELETE, etc.) into separate class method. for example 'list' for handling list objects(GET).CREATE for creating an object(POST).'retrieve' for retrieve single object(GET)...
+-> Provides actions for list, create, retrieve, update, partial_update, destroy
+-> Useful for CRUD APIs
+->Use Routers to automatically generate URLs.
