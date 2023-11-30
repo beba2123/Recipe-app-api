@@ -275,6 +275,7 @@ from rest_framework.test import APIClient
 ->Useful for non CRUD APIs
         -> Avoid for simple Create,Read, Update, Delete APIs
 ->it provide also a lots of built- in features such as handling authentication, permissions and responce formatting.so it is a flexible way to structure the views and allows you to define diffrent methods for diffrent HTTP methods in a single class.
+
 # ViewSet
 ->it is a class that bundles the logic for variouss HTTP methods(GET, POST, PUT, DELETE, etc.) into separate class method. for example 'list' for handling list objects(GET).CREATE for creating an object(POST).'retrieve' for retrieve single object(GET)...
 -> Provides actions for list, create, retrieve, update, partial_update, destroy
