@@ -59,3 +59,19 @@ class PrivateRecipesApiTests(TestCase):
         recipes =  Recipe.objects.all().order_by('-id')
         serializer = RecipeSerializer(recipes, many=True)  #for serializing multiple instance but if we serialize single  instance 'many=false'
 
+    def test_recipe_list_limited_to_user(self):
+        """Test retrieving recipes for the authenticated user."""
+        user2 = get_user_model().objects.create(
+            'other@gmail.com',
+            'testpass',
+        )
+        create_recipe(user=user2) #for not authenticate user
+        create_recipe(user=self.user) #for authenticate user
+
+        res = self.client.get(RECIPES_URL)
+
+        recipes = Recipe.objects.filter(user=self.user) #for filtering out recipe for the authenticated user
+        serilizer = RecipeSerializer(recipes, many=True)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serilizer.data)
+
