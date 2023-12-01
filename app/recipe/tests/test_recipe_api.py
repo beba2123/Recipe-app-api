@@ -12,6 +12,10 @@ from recipe.serializers import RecipeSerializer
 
 RECIPES_URL = reverse('recipe:recipe-list')
 
+def detail_url(recipe_id):
+    """create and return recipe detail url."""
+    return reverse('recipe:recipe-detail', args=[recipe_id])
+
 def create_recipe(user, **params):
     """Create and return a sample recipe."""
     defaults = {
