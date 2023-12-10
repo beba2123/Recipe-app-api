@@ -148,3 +148,33 @@ class PrivateRecipesApiTests(TestCase):
             self.assertEqual(getattr(recipe, k), v)
         self.assertEqual(recipe.user, self.user)
 
+    def test_update_user_returns_error(self):
+        """Test that updating a recipe with put is not allowed."""
+        new_user = create_user(email='user@gmail.com', password='test123')
+        recipe = create_recipe(user=self.user)
+
+        payload= {'user':   new_user.id}
+        url = detail_url(recipe.id)
+        self.client.patch(url, payload)
+
+        recipe.refresh_from_db()
+        self.assertEqual(recipe.user, self.user)
+
+    def test_delete_recipe(self):
+        """Test deleting a recipe."""
+        recipe = create_recipe(user=self.user)
+        url = detail_url(recipe.id)
+        res = self.client.delete(url)
+
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(Recipe.objects.filter(id=recipe.id).exists())
+
+    def test_delete_other_users_recipe_error(self):
+        """Test deleting a recipe of other user."""
+        other_user = create_user(email='other@gmail.com', password='password123')
+        recipe = create_recipe(user=other_user)
+        url = detail_url(recipe.id)
+        res = self.client.delete(url)
+
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertTrue(Recipe.objects.filter(id=recipe.id).exists())
