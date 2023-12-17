@@ -281,3 +281,7 @@ from rest_framework.test import APIClient
 -> Provides actions for list, create, retrieve, update, partial_update, destroy
 -> Useful for CRUD APIs
 ->Use Routers to automatically generate URLs.
+
+# Mixins
+-> it is a way to achieve multiple inheritance in Python.It can allows you to inherit functionallity from multiple sources, instead of bieng limited to inherit from single class.
+-> for example from the project in recipe app in the view.py file the tagviewset class inherit  two mixin (mixins.ListModelMixin, mixin.UpdateModelMixin) so each mixin it provide a set of functionality.like ListModelMixin provides the list acition for a view, that allows you to retrieve a list of objects from the database(GET Method.) and UpdateModelMixin for updating actions(patch or put.) for updating the tag.
