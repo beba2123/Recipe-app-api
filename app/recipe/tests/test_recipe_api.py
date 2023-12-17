@@ -196,5 +196,29 @@ class PrivateRecipesApiTests(TestCase):
         self.assertEqual(len(payload['tags']), len(recipe.tags)) #checking if the amount of tags that are in the payload is equal to recipe.
         for tag in payload['tags']:
             exists = recipe.tags.filter(name=tag['name'],user=self.user,).exists()
-            self.assertEqual(exists)
-            
+            self.assertTrue(exists)
+
+
+    def test_create_recipe_with_existing_tags(self):
+        """Test that the API can use existing tags."""
+        tag_ethio = Tag.objects.create(user=self.user, name='kondo-berebere')
+        payload = {
+            'title': 'shiro',
+            'time_minutes': 30,
+            'price': Decimal('4.50'),
+            'tags': [{'name':'kondo-berebere'},{'name':'Dinner'}],
+        }
+        res = self.client.post(RECIPES_URL,payload,format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+        recipes = Recipe.objects.filter(user=self.user)
+          # check if it has two tags and one recipe
+        self.assertEqual(recipes.tags.count(), 1)
+        recipe = recipes[0]
+        #checking the name inside the tag.
+        self.assertEqual(len(payload['tags']), len(recipe.tags))
+        self.assertIn(tag_ethio, recipe.tags.all())
+        for tag in payload['tags']:
+            exists = recipe.tags.filter(name=tag['name'], user = self.user).exists()
+            self.assertTrue(exists)
