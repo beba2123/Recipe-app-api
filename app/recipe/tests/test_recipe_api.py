@@ -241,13 +241,26 @@ class PrivateRecipesApiTests(TestCase):
         """Test assigning an existing tag when updating a recipe."""
         tag_fruit = Tag.objects.create(user=self.user, name='orange')
         recipe = create_recipe(user=self.user)
-        recipe.tag.add(tag_fruit)
+        recipe.tags.add(tag_fruit)
 
         tag_vege = Tag.objects.create(user=self.user, name='orange')
         payload = {'tags': [{'name': 'Lunch'}]}
         url = detail_url(recipe.id)
-        res = self.client.patch(url, tag_vege, format='json')
+        res = self.client.patch(url, payload, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertIn(tag_vege, recipe.tags.all())
         self.assertNotIn(tag_fruit, recipe.tags.all())
+
+    def test_cleat_recipe_tag(self):
+        '''Test removing all tags from a recipe'''
+        tag  = Tag.objects.create(user=self.user, name='Lunch')
+        recipe = create_recipe(user=self.user)
+        recipe.tag.add(tag)
+
+        payload = {'tags': []} #empty tags
+        url = detail_url(recipe.id)
+        res = self.client.post(url, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertFalse(recipe.tags.all().exists())
