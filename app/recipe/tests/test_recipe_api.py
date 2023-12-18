@@ -192,8 +192,10 @@ class PrivateRecipesApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
         recipes = Recipe.objects.filter(user=self.user)
-        recipe = recipes[0]
-        self.assertEqual(len(payload['tags']), len(recipe.tags)) #checking if the amount of tags that are in the payload is equal to recipe.
+        self.assertEqual(recipes.count(), 1)
+        recipe = recipes[0] # assign the first index recipes to the recipe variable
+        self.assertEqual(recipe.tags.count(), 2) #count the tag in the  recipe.
+        # self.assertEqual(len(payload['tags']), len(recipe.tags)) #checking if the amount of tags that are in the payload is equal to recipe.
         for tag in payload['tags']:
             exists = recipe.tags.filter(name=tag['name'],user=self.user,).exists()
             self.assertTrue(exists)
@@ -214,11 +216,13 @@ class PrivateRecipesApiTests(TestCase):
 
         recipes = Recipe.objects.filter(user=self.user)
           # check if it has two tags and one recipe
-        self.assertEqual(recipes.tags.count(), 1)
+        self.assertEqual(recipes.count(), 1) #check if it has one recipe
         recipe = recipes[0]
         #checking the name inside the tag.
-        self.assertEqual(len(payload['tags']), len(recipe.tags))
+        self.assertEqual(recipe.tags.count(), 2)
+        # self.assertEqual(len(payload['tags']), len(recipe.tags))
         self.assertIn(tag_ethio, recipe.tags.all())
         for tag in payload['tags']:
             exists = recipe.tags.filter(name=tag['name'], user = self.user).exists()
             self.assertTrue(exists)
+
