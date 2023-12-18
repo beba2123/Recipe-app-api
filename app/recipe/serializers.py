@@ -22,11 +22,8 @@ class RecipeSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'time_minutes', 'price', 'link', 'tags']
         read_only_fields = ['id']
 
-    def create(self, validated_data):
-        """Create and return a new recipe instance, given the validated data."""
-        
-        tags = validated_data.pop('tags', []) #delete tag and assign tags variable
-        recipe = Recipe.objects.create(**validated_data) #create recipe without a tag.
+    def _get_or_create_tags(self, tags, recipe):
+        """Create or retrieve new tags from the input data and assign them to the recipe"""
         auth_user = self.context['request'].user
         for tag in tags:
             tag_obj, created = Tag.objects.get_or_create(
@@ -36,7 +33,26 @@ class RecipeSerializer(serializers.ModelSerializer):
                  )
             recipe.tags.add(tag_obj)
 
+    def create(self, validated_data):
+        """Create and return a new recipe instance, given the validated data."""
+
+        tags = validated_data.pop('tags', []) #delete tag and assign tags variable
+        recipe = Recipe.objects.create(**validated_data) #create recipe without a tag.
+        self._get_or_create_tags(tags,recipe)#calling our helper function
+
         return recipe
+    def update(self, instance, validated_data):
+        """Handle updating an existing recipe"""
+        tags = validated_data.pop('tags', None)
+        if tags is not None:
+            instance.tags.clear()
+            self._get_or_create_tags(tags, instance)
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+        return instance
 
 
 class RecipeDetailSerializer(RecipeSerializer):

@@ -231,7 +231,7 @@ class PrivateRecipesApiTests(TestCase):
         recipe = create_recipe(user=self.user) #creating sample recipe.
         payload = {'tags': [{'name': 'Lunch'}]}
         url = detail_url(recipe.id)
-        res = self.client.patch(url, payload)
+        res = self.client.patch(url, payload, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         new_tag = Tag.objects.get(user=self.user, name='Lunch') #retrieve the new tag that we created it when we update our recipe.
@@ -243,8 +243,8 @@ class PrivateRecipesApiTests(TestCase):
         recipe = create_recipe(user=self.user)
         recipe.tags.add(tag_fruit)
 
-        tag_vege = Tag.objects.create(user=self.user, name='orange')
-        payload = {'tags': [{'name': 'Lunch'}]}
+        tag_vege = Tag.objects.create(user=self.user, name='potato')
+        payload = {'tags': [{'name': 'potato'}]}
         url = detail_url(recipe.id)
         res = self.client.patch(url, payload, format='json')
 
@@ -252,15 +252,15 @@ class PrivateRecipesApiTests(TestCase):
         self.assertIn(tag_vege, recipe.tags.all())
         self.assertNotIn(tag_fruit, recipe.tags.all())
 
-    def test_cleat_recipe_tag(self):
+    def test_clear_recipe_tag(self):
         '''Test removing all tags from a recipe'''
         tag  = Tag.objects.create(user=self.user, name='Lunch')
         recipe = create_recipe(user=self.user)
-        recipe.tag.add(tag)
+        recipe.tags.add(tag)
 
         payload = {'tags': []} #empty tags
         url = detail_url(recipe.id)
-        res = self.client.post(url, payload)
+        res = self.client.patch(url, payload, format='json')
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertFalse(recipe.tags.all().exists())
+        self.assertEqual(recipe.tags.count(), 0)
