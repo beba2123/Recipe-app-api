@@ -226,3 +226,13 @@ class PrivateRecipesApiTests(TestCase):
             exists = recipe.tags.filter(name=tag['name'], user = self.user).exists()
             self.assertTrue(exists)
 
+    def test_create_tag_on_update(self):
+        """Test updating a recipe with new tags."""
+        recipe = create_recipe(user=self.user) #creating sample recipe.
+        payload = {'tags': [{'name': 'Lunch'}]}
+        url = detail_url(recipe.id)
+        res = self.client.patch(url, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        new_tag = Tag.objects.get(user=self.user, name='Lunch') #retrieve the new tag that we created it when we update our recipe.
+        self.assertIn(new_tag, recipe.tags.all()) #checking the new_tag from the tags.
