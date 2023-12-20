@@ -24,25 +24,25 @@ class PublicIngredientApiTest(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
-# class PrivateIngredientAPITest(TestCase):
-#     """Test ingredients can be retrieved by authorized users"""
-#     def setUp(self):
-#         self.user = create_user()
-#         self.client = APIClient()
-#         self.client.force_authenticate(self.user)
+class PrivateIngredientAPITest(TestCase):
+    """Test ingredients can be retrieved by authorized users"""
+    def setUp(self):
+        self.user = create_user()
+        self.client = APIClient()
+        self.client.force_authenticate(self.user)
 
-#     def test_retrieve_ingredients(self):
-#         """test retrieving a list of ingredient."""
-#         Ingredient.objects.create(user=self.user, name='sauce')
-#         Ingredient.objects.create(user=self.user, name='cheese') #create Two ingredient
+    def test_retrieve_ingredients(self):
+        """test retrieving a list of ingredient."""
+        Ingredient.objects.create(user=self.user, name='sauce')
+        Ingredient.objects.create(user=self.user, name='cheese') #create Two ingredient
 
-#         #we have to retrieve the ingredient
-#         res = self.client.get(Ingredient_URL)
-#         ingredients = Ingredient.objects.all().order_by('-name')
-#         serializer = IngredientSerializer(ingredients, many=True)
+        #we have to retrieve the ingredient
+        res = self.client.get(Ingredient_URL)
+        ingredients = Ingredient.objects.all().order_by('-name')
+        serializer = IngredientSerializer(ingredients, many=True)
 
-#         self.assertEqual(res.status_code, status.HTTP_200_OK)
-#         self.assertEqual(res.data, serializer.data)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
 
 #     def test_ingredients_limited_user(self):
 #         """Test that only authenticated user's ingredients are returned."""
