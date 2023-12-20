@@ -44,14 +44,14 @@ class PrivateIngredientAPITest(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
 
-#     def test_ingredients_limited_user(self):
-#         """Test that only authenticated user's ingredients are returned."""
-#         user2 = create_user(email="user2@example.com") #we create unauthenticated user
-#         Ingredient.objects.create(user=user2, name='Vinegar') #create ingredient for it.
-#         ingredient = Ingredient.objects.create(user=self.user, name='pepper')#create ingredient for authenticated user.
-#         res = self.client.get(Ingredient_URL)
+    def test_ingredients_limited_user(self):
+        """Test that only authenticated user's ingredients are returned."""
+        user2 = create_user(email="user2@example.com") #we create unauthenticated user
+        Ingredient.objects.create(user=user2, name='Vinegar') #create ingredient for it.
+        ingredient = Ingredient.objects.create(user=self.user, name='pepper')#create ingredient for authenticated user.
+        res = self.client.get(Ingredient_URL)
 
-#         self.assertEqual(res.status_code, status.HTTP_200_OK)
-#         self.assertEqual(len(res.data), 1)
-#         self.assertEqual(len(res.data[0]['name']), ingredient.name)
-#         self.assertEqual(len(res.data[0]['id']), ingredient.id)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res.data), 1)
+        self.assertEqual(len(res.data[0]['name']), ingredient.name)
+        self.assertEqual(len(res.data[0]['id']), ingredient.id)
