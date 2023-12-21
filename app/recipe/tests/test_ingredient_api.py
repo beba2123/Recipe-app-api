@@ -6,7 +6,7 @@ from rest_framework.test import  APIClient
 from core.models import Ingredient
 from recipe.serializers import IngredientSerializer
 
-Ingredient_URL = reverse('recipe:ingredient-list')
+INGREDIENTS_URL = reverse('recipe:ingredient-list')
 
 def create_user(email='user@example.com', password='pass123'):
     """create and return a user"""
@@ -20,7 +20,7 @@ class PublicIngredientApiTest(TestCase):
 
     def test_auth_required(self):
         '''Test that authentication is required to access the endpoint'''
-        res = self.client.get(Ingredient_URL)
+        res = self.client.get(INGREDIENTS_URL)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -37,7 +37,7 @@ class PrivateIngredientAPITest(TestCase):
         Ingredient.objects.create(user=self.user, name='cheese') #create Two ingredient
 
         #we have to retrieve the ingredient
-        res = self.client.get(Ingredient_URL)
+        res = self.client.get(INGREDIENTS_URL)
         ingredients = Ingredient.objects.all().order_by('-name')
         serializer = IngredientSerializer(ingredients, many=True)
 
@@ -48,10 +48,10 @@ class PrivateIngredientAPITest(TestCase):
         """Test that only authenticated user's ingredients are returned."""
         user2 = create_user(email="user2@example.com") #we create unauthenticated user
         Ingredient.objects.create(user=user2, name='Vinegar') #create ingredient for it.
-        ingredient = Ingredient.objects.create(user=self.user, name='pepper')#create ingredient for authenticated user.
-        res = self.client.get(Ingredient_URL)
+        ingredient = Ingredient.objects.create(user=self.user, name='Pepper')#create ingredient for authenticated user.
+        res = self.client.get(INGREDIENTS_URL) #retrieve ingredient from database
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
-        self.assertEqual(len(res.data[0]['name']), ingredient.name)
-        self.assertEqual(len(res.data[0]['id']), ingredient.id)
+        self.assertEqual(res.data[0]['name'], ingredient.name)
+        self.assertEqual(res.data[0]['id'], ingredient.id)
