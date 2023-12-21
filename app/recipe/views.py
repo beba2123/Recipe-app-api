@@ -41,15 +41,15 @@ class TagViewSet(mixins.DestroyModelMixin, mixins.UpdateModelMixin, mixins.ListM
          return self.queryset.filter(user=self.request.user).order_by('-name')
 
 
-# class IngredientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-#     """Handles creating and updating ingredients."""
-#     serializer_class = serializers.IngredientSerializer
-#     queryset = Ingredient.objects.all()
-#     authentication_classes = [TokenAuthentication] #authenticate
-#     permission_classes = [IsAuthenticated] #permit the user
+class IngredientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """Handles creating and updating ingredients."""
+    serializer_class = serializers.IngredientSerializer
+    queryset = Ingredient.objects.all()
+    authentication_classes = [TokenAuthentication] #authenticate
+    permission_classes = [IsAuthenticated] #permit the user
 
-#     def get_queryset(self):
-#          """retrieve ingredients that are already associated with authenticated user."""
-#          return self.queryset.filter(user=self.request.user).order_by('-name')
+    def get_queryset(self):
+         """retrieve ingredients that are already associated with authenticated user."""
+         return self.queryset.filter(user=self.request.user).order_by('-name')
 
 
