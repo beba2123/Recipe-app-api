@@ -23,10 +23,10 @@ class TagSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     """serialize a recipe object"""
     tags = TagSerializer(many=True, required=False)
-
+    ingredients = IngredientSerializer(many=True, required=False)
     class Meta:
         model = Recipe
-        fields = ['id', 'title', 'time_minutes', 'price', 'link', 'tags']
+        fields = ['id', 'title', 'time_minutes', 'price', 'link', 'tags', 'ingredients']
         read_only_fields = ['id']
 
     def _get_or_create_tags(self, tags, recipe):
@@ -39,6 +39,18 @@ class RecipeSerializer(serializers.ModelSerializer):
                     #**tag we use is incase we change name variable in the future.
                  )
             recipe.tags.add(tag_obj)
+
+    def _get_or_create_ingredient(self, ingredients, recipe):
+        """Create or retrieve from the input data and assign them to the recipe"""
+        auth_user = self.context['request'].user
+        for ingredient in ingredients:
+            ingre_obj, created = Ingredient.objects.get_or_create(
+                    user=auth_user,
+                    **ingredient,
+
+                )
+            recipe.ingredients.add(ingre_obj)
+    
 
     def create(self, validated_data):
         """Create and return a new recipe instance, given the validated data."""
