@@ -264,3 +264,26 @@ class PrivateRecipesApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(recipe.tags.count(), 0)
+
+    def test_create_recipe_with_new_ingredient(self):
+        """Test creating a recipe with one or more ingredients"""
+        payload = {
+            'title': 'rice with potatoes',
+            'time_minutes': 60,
+            'price':Decimal('3.00'),
+            'ingredients':[{'name': 'rice'}, {'name': 'potato'}]
+        }
+
+        res = self.client.post(RECIPES_URL, payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        recipes = Recipe.objects.filter(user=self.user)
+        self.assertEqual(recipes.count(), 1)
+        recipe = recipes[0]
+        self.assertEqual(recipe.ingredient.count(), 2)
+
+        for ingredient in payload['ingredients']:
+            exist = recipe.objects.filter(name=ingredient['name'],
+                            user=self.user
+                            ).exists()
+            self.assertTrue(exist)
