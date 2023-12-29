@@ -285,3 +285,13 @@ from rest_framework.test import APIClient
 # Mixins
 -> it is a way to achieve multiple inheritance in Python.It can allows you to inherit functionallity from multiple sources, instead of bieng limited to inherit from single class.
 -> for example from the project in recipe app in the view.py file the tagviewset class inherit  two mixin (mixins.ListModelMixin, mixin.UpdateModelMixin) so each mixin it provide a set of functionality.like ListModelMixin provides the list acition for a view, that allows you to retrieve a list of objects from the database(GET Method.) and UpdateModelMixin for updating actions(patch or put.) for updating the tag.
+
+
+# Refactoring
+-> It is a software engineering process that aims to improve the internal structure of code. This can include modifying variables, classes, or functions. Refactoring is performed to enhace readablity and maintainablity as well as to reduce redundancy and improve perfromance.
+
+# static and media file
+## Static files are served from a folder named static inside your Django project directory. Generated on build
+-> Static files are served from STATIC_ROOT directory.
+## medial file are uloaded at runtime like user upload.
+ 

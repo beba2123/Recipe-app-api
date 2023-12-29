@@ -19,7 +19,8 @@ from drf_spectacular.views import (
     SpectacularAPIView, #class based view
     SpectacularSwaggerView,
 )
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -29,3 +30,8 @@ urlpatterns = [
     path('api/user/', include('user.urls')),
     path('api/recipe/', include('recipe.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, #where we can access the file
+                          document_root=settings.MEDIA_ROOT, #where we can store the file
+                          )
