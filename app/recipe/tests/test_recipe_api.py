@@ -9,12 +9,18 @@ from rest_framework import status
 from rest_framework.test import APIClient
 from core.models import Recipe,  Tag, Ingredient
 from recipe.serializers import RecipeSerializer, RecipeDetailSerializer
+import tempfile, os
+from PIL import Image
 
 RECIPES_URL = reverse('recipe:recipe-list')
 
 def detail_url(recipe_id):
     """create and return recipe detail url."""
     return reverse('recipe:recipe-detail', args=[recipe_id])
+
+def upload_image(recipe_id):
+    """Create a sample image file name for testing."""
+    return reverse('recipe:recipe-upload-image', args=[recipe_id])
 
 def create_recipe(user, **params):
     """Create and return a sample recipe."""
@@ -348,3 +354,21 @@ class PrivateRecipesApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(recipe.ingredients.count(), 0)
+
+
+
+class ImageUploadTests(TestCase):
+    """Test for image upload API."""
+
+    def setUp(self):
+        self.client = APIClient()
+        self.user = get_user_model().objects.create_user(
+            "test@gmail.com",
+            "password123456789",
+        )
+        self.client.force_authenticate(self.user)
+        self.recipe = create_recipe(user=self.user)
+
+    def tearDown(self):
+        # Clean up the media files after each test
+        self.recipe.image.delete()  
