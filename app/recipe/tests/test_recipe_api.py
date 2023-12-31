@@ -389,10 +389,10 @@ class ImageUploadTests(TestCase):
             self.assertIn("image", res.data)
             self.assertTrue(os.path.exists(self.recipe.image.path))
 
-    # def test_upload_image_bad_request(self):
-    #     """Test uploading invalid image"""
-    #     url = upload_image_url(self.recipe.id)
-    #     payload = {'image':'not an image'}
-    #     res = self.client.post(url,payload, format='multipart')
+    def test_upload_image_bad_request(self):
+        """Test uploading invalid image"""
+        url = upload_image_url(self.recipe.id)
+        payload = {'image':'not an image'}
+        res = self.client.post(url,payload, format='multipart')
 
-    #     self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
