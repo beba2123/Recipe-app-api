@@ -18,7 +18,7 @@ def detail_url(recipe_id):
     """create and return recipe detail url."""
     return reverse('recipe:recipe-detail', args=[recipe_id])
 
-def upload_image(recipe_id):
+def upload_image_url(recipe_id):
     """Create a sample image file name for testing."""
     return reverse('recipe:recipe-upload-image', args=[recipe_id])
 
@@ -371,4 +371,28 @@ class ImageUploadTests(TestCase):
 
     def tearDown(self):
         # Clean up the media files after each test
-        self.recipe.image.delete()  
+        self.recipe.image.delete()
+
+
+    def test_upload_image(self):
+        """Test that we can successfully upload an image to a recipe."""
+        url = upload_image_url(self.recipe.id)
+        with tempfile.NamedTemporaryFile(suffix=".jpg") as image_file:
+            img = Image.new('RGB', (10, 10))
+            img.save(image_file)
+            image_file.seek(0)
+            payload = {'image':image_file}
+            res = self.client.post(url, payload,format="multipart")
+
+            self.recipe.refresh_from_db
+            self.assertEqual(res.status_code, status.HTTP_200_OK)
+            self.assertIn("image", res.data)
+            self.assertTrue(os.path.exists(self.recipe.image.path))
+
+    # def test_upload_image_bad_request(self):
+    #     """Test uploading invalid image"""
+    #     url = upload_image_url(self.recipe.id)
+    #     payload = {'image':'not an image'}
+    #     res = self.client.post(url,payload, format='multipart')
+
+    #     self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
