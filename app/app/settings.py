@@ -144,3 +144,7 @@ AUTH_USER_MODEL = 'core.User' #for telling to use User Model in my app name core
 REST_FRAMEWORK ={
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
+SPECTACULAR_SETTINGS = {
+    'COMPONENT_SPLIT_REQUEST': True,
+}
