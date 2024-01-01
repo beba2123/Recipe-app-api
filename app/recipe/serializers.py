@@ -85,7 +85,7 @@ class RecipeDetailSerializer(RecipeSerializer):
     """Serialize a recipe detail"""
 
     class Meta(RecipeSerializer.Meta):
-        fields = RecipeSerializer.Meta.fields + ['description'] #we add description on the recipe part becouse we want each recipe in datail.
+        fields = RecipeSerializer.Meta.fields + ['description', 'image'] #we add description on the recipe part becouse we want each recipe in datail.
 
 # class TagSerializer(serializers.ModelSerializer):
 #     """Serializer for tag objects"""
@@ -94,10 +94,10 @@ class RecipeDetailSerializer(RecipeSerializer):
 #         model = Tag
 #         fields = ['id', 'name']
 #         read_only_fields = ['id']
-
+ 
 class RecipeImageSerializer(serializers.ModelSerializer):
     """Serializer for uploading images to recipes"""
-    
+
     class Meta:
         model = Recipe
         fields = ['id', 'image']
