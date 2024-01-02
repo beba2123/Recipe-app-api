@@ -376,6 +376,29 @@ class PrivateRecipesApiTests(TestCase):
         self.assertIn(serializer2.data, res.data)
         self.assertNotIn(serializer3.data, res.data)
 
+    def test_filter_by_ingredient(self):
+        """Test for filtering recipe by specific ingredient."""
+        recipe1 = create_recipe(self.user, title="Poshie")
+        recipe2 = create_recipe(self.user, title="Beefy")
+        ingredient1 = Ingredient.objects.create(user=self.user, name="Bacon")
+        ingredient2 = Ingredient.objects.create(user=self.user, name="Salt")
+        recipe1.ingredients.add(ingredient1)
+        recipe2.ingredients.add(ingredient2)
+
+        recipe3 = create_recipe(self.user, title = "fishy")
+        params = {"ingredients":f"{ingredient1.id},{ingredient2.id}"}
+        res = self.client.get(RECIPES_URL, params)
+
+        serializer1 = RecipeSerializer(recipe1)
+        serializer2 = RecipeSerializer(recipe2)
+        serializer3 = RecipeSerializer(recipe3)
+            #check if the data exist in data
+        self.assertIn(serializer1.data, res.data)
+        self.assertIn(serializer2.data, res.data)
+        self.assertNotIn(serializer3.data, res.data)
+
+
+
 class ImageUploadTests(TestCase):
     """Test for image upload API."""
 
