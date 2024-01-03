@@ -112,7 +112,7 @@ class PrivateTagsApiTests(TestCase):
     def test_filtered_tags_unique(self):
         """Test that returned tags are unique"""
         tag = Tag.objects.create(user=self.user,name='Breakfast')
-        Tag.objects.create(user=self.user(),name='Dessert')
+        Tag.objects.create(user=self.user,name='Dessert')
 
         recipe1 = Recipe.objects.create(
             title='Dessert Food',
@@ -131,5 +131,5 @@ class PrivateTagsApiTests(TestCase):
         recipe2.tags.add(tag)
 
         res = self.client.get(TAGS_URL, {'assigned_only':1})
-        
+
         self.assertEqual(len(res.data), 1)
