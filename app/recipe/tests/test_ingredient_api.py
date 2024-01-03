@@ -110,3 +110,26 @@ class PrivateIngredientAPITest(TestCase):
         self.assertIn(serializer1.data, res.data)
         self.assertNotIn(serializer2.data, res.data)
 
+    def test_filterd_ingredients_unique(self):
+        """Test that the returned ingredients are unique"""
+        ing = Ingredient.objects.create(user=self.user, name='Eggs')
+        Ingredient.objects.create(user=self.user, name='Cheese')
+
+        recipe1 = Recipe.objects.create(
+            title='Eggs benedict',
+            time_minutes=30,
+            price=Decimal('8.00'),
+            user=self.user,
+        )
+        recipe2 = Recipe.objects.create(
+            title = 'Herb Eggs',
+            time_minutes=15,
+            price= Decimal("6.0"),
+            user=self.user,
+        )
+        recipe1.ingredients.add(ing)
+        recipe2.ingredients.add(ing)
+
+        res = self.client.get(INGREDIENTS_URL, {'assigned_only': 1})
+        #check that if it is one ingredient
+        self.assertEqual(len(res.data), 1)
