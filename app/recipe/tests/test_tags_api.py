@@ -1,5 +1,6 @@
 """ Test for the tags API."""
 
+from decimal import Decimal
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.test import TestCase
@@ -86,3 +87,30 @@ class PrivateTagsApiTests(TestCase):
         # check if it has been deleted from DB
         tags = Tag.objects.filter(id=tag.id) #first filter out the tag and then
         self.assertFalse(tags.exists()) # then check out if it is exist.
+
+    def test_filter_tags_assigned_to_recipe(self):
+        """Test filtering tags by those assigned to recipes."""
+        tag1 = Tag.objects.create(user=self.user, name = 'Dessert')
+        tag2 =  Tag.objects.create(user=self.user, name='Breakfast')
+
+        recipe1 = Recipe.objects.create(
+            title='Dessert Food',
+            time_minutes=35,
+            price=Decimal('7.00'),
+            user=self.user
+        )
+        recipe2 = Recipe.objects.create(
+            title="BreakFast",
+            time_minutes=60,
+            price=Decimal("9.00"),
+            user=self.user
+        )
+        recipe1.tags.add(tag1)
+        
+        # get all the tags which are associated with any recipe
+        res = self.client.get(TAGS_URL, {'assigned_only': 1})
+        serializer1 = TagSerializer(tag1)
+        serializer2 = TagSerializer(tag2)
+
+        self.assertIn(serializer1.data, res.data)
+        self.assertNotIn(serializer2.data, res.data)
