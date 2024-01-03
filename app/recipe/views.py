@@ -12,6 +12,23 @@ from recipe import serializers
 
 
 
+@extend_schema_view(
+    list=extend_schema(  #to extend the schema to the list endpoint
+        parameters=[
+            OpenApiParameter(
+                'tags',
+                OpenApiTypes.STR,
+                description='Comma separated list of IDs to filter',
+            ),
+            OpenApiParameter(
+                'ingredients',
+                OpenApiTypes.STR,
+                description='Comma-separated list of IDs of ingredients to filter',
+            )
+        ]
+    )
+)
+
 class RecipeViewSet(viewsets.ModelViewSet): #the modelViewSet specifically for model
     """Manage recipes in the database."""
     serializer_class =  serializers.RecipeDetailSerializer
